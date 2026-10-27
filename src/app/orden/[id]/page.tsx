@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { CheckCircle2, Package, Truck, MapPin, Mail, Phone, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -54,14 +53,9 @@ export default async function OrdenPage({ params }: Props) {
   return (
     <section className="container mx-auto max-w-3xl px-4 py-12">
       <div className="text-center mb-8">
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5, type: "spring" }}
-          className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-secondary/10 text-secondary mb-4"
-        >
+        <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-secondary/10 text-secondary mb-4">
           <CheckCircle2 className="h-10 w-10" />
-        </motion.div>
+        </div>
         <h1 className="font-serif text-4xl font-semibold">
           ¡Gracias por tu compra!
         </h1>
