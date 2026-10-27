@@ -1,0 +1,55 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Producto {
+  id              String    @id @default(cuid())
+  nombre          String
+  descripcion     String
+  precio          Float
+  precioOferta    Float?
+  categoriaId     String
+  categoria       Categoria @relation(fields: [categoriaId], references: [id])
+  imagenes        String
+  especificaciones String?
+  stock           Int       @default(0)
+  rating          Float     @default(0)
+  destacado       Boolean   @default(false)
+  creadoEn        DateTime  @default(now())
+}
+
+model Categoria {
+  id        String      @id @default(cuid())
+  nombre    String
+  slug      String      @unique
+  productos Producto[]
+}
+
+model Orden {
+  id              String   @id @default(cuid())
+  clienteNombre   String
+  clienteEmail    String
+  clienteTelefono String
+  direccion       String
+  ciudad          String
+  codigoPostal    String
+  items           String
+  subtotal        Float
+  envio           Float
+  total           Float
+  estado          String   @default("pendiente")
+  cupon           String?
+  creadoEn        DateTime @default(now())
+}
+
+model Cupon {
+  codigo    String  @id
+  descuento Float
+  activo    Boolean @default(true)
+}
