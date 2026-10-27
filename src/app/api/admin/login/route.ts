@@ -10,7 +10,7 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
-    setAdminCookie();
+    await setAdminCookie();
     return NextResponse.json({ ok: true });
   } catch (e) {
     console.error("[POST /api/admin/login]", e);

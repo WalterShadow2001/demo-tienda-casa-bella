@@ -3,8 +3,9 @@ import { cookies } from "next/headers";
 export const ADMIN_COOKIE = "casa_bella_admin";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
 
-export function setAdminCookie() {
-  cookies().set({
+export async function setAdminCookie() {
+  const c = await cookies();
+  c.set({
     name: ADMIN_COOKIE,
     value: "true",
     httpOnly: true,
@@ -14,8 +15,9 @@ export function setAdminCookie() {
   });
 }
 
-export function clearAdminCookie() {
-  cookies().set({
+export async function clearAdminCookie() {
+  const c = await cookies();
+  c.set({
     name: ADMIN_COOKIE,
     value: "",
     httpOnly: true,
@@ -25,9 +27,10 @@ export function clearAdminCookie() {
   });
 }
 
-export function isAdmin(): boolean {
-  const c = cookies().get(ADMIN_COOKIE);
-  return c?.value === "true";
+export async function isAdmin(): Promise<boolean> {
+  const c = await cookies();
+  const val = c.get(ADMIN_COOKIE);
+  return val?.value === "true";
 }
 
 export function validatePassword(password: string): boolean {

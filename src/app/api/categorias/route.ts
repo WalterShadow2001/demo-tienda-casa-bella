@@ -18,7 +18,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    if (!isAdmin()) {
+    if (!(await isAdmin())) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
     }
     const body = await req.json();

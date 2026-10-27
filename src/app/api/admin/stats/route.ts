@@ -4,7 +4,7 @@ import { isAdmin } from "@/lib/auth";
 
 export async function GET() {
   try {
-    if (!isAdmin()) {
+    if (!(await isAdmin())) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
     }
 

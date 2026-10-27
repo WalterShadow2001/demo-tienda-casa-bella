@@ -24,7 +24,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    if (!isAdmin()) {
+    if (!(await isAdmin())) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
     }
     const { id } = await params;
