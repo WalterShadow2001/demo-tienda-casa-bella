@@ -60,9 +60,8 @@ export async function GET(req: Request) {
     return NextResponse.json(productos);
   } catch (e) {
     console.error("[GET /api/productos]", e);
-    const errMsg = e instanceof Error ? e.message : String(e);
     return NextResponse.json(
-      { error: "Error al obtener productos", detail: errMsg, stack: e instanceof Error ? e.stack : undefined },
+      { error: "Error al obtener productos" },
       { status: 500 }
     );
   }
