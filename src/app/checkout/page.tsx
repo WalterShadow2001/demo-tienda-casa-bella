@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion } from "framer-motion";
-import { CreditCard, Banknote, Wallet, Loader2, ArrowLeft, Lock } from "lucide-react";
+import { CreditCard, Banknote, Wallet, ArrowLeft, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -60,7 +60,7 @@ export default function CheckoutPage() {
         <p className="text-muted-foreground mb-6">
           Agrega productos antes de finalizar tu compra.
         </p>
-        <Button asChild>
+        <Button asChild className="btn-elegant">
           <Link href="/productos">Ver productos</Link>
         </Button>
       </section>
@@ -291,11 +291,11 @@ export default function CheckoutPage() {
                   {formatMXN(totals.total)}
                 </span>
               </div>
-              <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+              <Button type="submit" size="lg" className="btn-elegant w-full" disabled={submitting}>
                 {submitting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" /> Procesando...
-                  </>
+                  <span className="inline-flex items-center gap-2">
+                    <span className="loader-leaf !h-4 !w-4 !border" /> Procesando...
+                  </span>
                 ) : (
                   <>Confirmar pedido</>
                 )}

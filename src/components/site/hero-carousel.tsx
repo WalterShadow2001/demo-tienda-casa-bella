@@ -78,7 +78,11 @@ export function HeroCarousel() {
     <section className="relative" aria-label="Galería de productos destacados">
       <div className="overflow-hidden">
         <div ref={emblaRef} className="flex">
-          {SLIDES.map((s, i) => (
+          {SLIDES.map((s, i) => {
+            const titleWords = s.title.split(" ");
+            const titleMain = titleWords.slice(0, -1).join(" ");
+            const titleHighlight = titleWords[titleWords.length - 1];
+            return (
             <div key={i} className="min-w-full">
               <div className={`relative bg-gradient-to-br ${s.bg} text-primary-foreground`}>
                 <div className="container mx-auto max-w-7xl px-4">
@@ -89,33 +93,36 @@ export function HeroCarousel() {
                       transition={{ duration: 0.6, delay: 0.05 }}
                       className="text-center md:text-left"
                     >
-                      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-foreground/15 backdrop-blur text-xs uppercase tracking-[0.25em]">
-                        <Sparkles className="h-3 w-3" />
-                        {s.eyebrow}
-                      </span>
-                      <h2 className="mt-4 font-serif text-4xl md:text-6xl font-semibold leading-[1.05]">
-                        {s.title}
-                        <span className="block text-primary-foreground/85 italic font-normal text-3xl md:text-4xl">
-                          {s.subtitle}
+                      <div className="card-soft-glass rounded-2xl p-6 md:p-10 text-foreground">
+                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 text-accent text-xs uppercase tracking-[0.25em]">
+                          <Sparkles className="h-3 w-3" />
+                          {s.eyebrow}
                         </span>
-                      </h2>
-                      <p className="mt-4 max-w-md mx-auto md:mx-0 text-primary-foreground/85 text-base">
-                        {s.description}
-                      </p>
-                      <div className="mt-8 flex flex-wrap items-center gap-3 justify-center md:justify-start">
-                        <Button asChild size="lg" variant="secondary">
-                          <Link href={s.cta.href}>
-                            {s.cta.label}
-                            <ArrowRight className="h-4 w-4" />
-                          </Link>
-                        </Button>
-                        <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
-                          <Link href={s.cta2.href}>{s.cta2.label}</Link>
-                        </Button>
-                      </div>
-                      <div className="mt-6 inline-flex items-center gap-2 text-xs text-primary-foreground/70">
-                        <span className="h-px w-8 bg-primary-foreground/30" />
-                        {s.badge}
+                        <h2 className="mt-4 font-serif text-4xl md:text-6xl font-semibold leading-[1.05] text-foreground">
+                          {titleMain}{" "}
+                          <span className="text-olive-gradient">{titleHighlight}</span>
+                          <span className="block text-foreground/70 italic font-normal text-3xl md:text-4xl">
+                            {s.subtitle}
+                          </span>
+                        </h2>
+                        <p className="mt-4 max-w-md mx-auto md:mx-0 text-foreground/80 text-base">
+                          {s.description}
+                        </p>
+                        <div className="mt-8 flex flex-wrap items-center gap-3 justify-center md:justify-start">
+                          <Button asChild size="lg" className="btn-elegant">
+                            <Link href={s.cta.href}>
+                              {s.cta.label}
+                              <ArrowRight className="h-4 w-4" />
+                            </Link>
+                          </Button>
+                          <Button asChild size="lg" className="btn-outline-brass">
+                            <Link href={s.cta2.href}>{s.cta2.label}</Link>
+                          </Button>
+                        </div>
+                        <div className="mt-6 inline-flex items-center gap-2 text-xs text-foreground/60">
+                          <span className="h-px w-8 bg-accent" />
+                          {s.badge}
+                        </div>
                       </div>
                     </motion.div>
                     <motion.div
@@ -135,7 +142,8 @@ export function HeroCarousel() {
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
       <button

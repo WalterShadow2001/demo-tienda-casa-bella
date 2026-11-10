@@ -32,7 +32,13 @@ export const metadata: Metadata = {
     "interior",
   ],
   authors: [{ name: "Casa Bella" }],
-  icons: { icon: "/logo.svg" },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml", sizes: "32x32" },
+      { url: "/logo.svg", type: "image/svg+xml" },
+    ],
+    apple: "/logo.svg",
+  },
   openGraph: {
     title: "Casa Bella | Hogar y Decoración",
     description: "Muebles y decoración con elegancia mexicana.",

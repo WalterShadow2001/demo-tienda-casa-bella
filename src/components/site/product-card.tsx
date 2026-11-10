@@ -1,8 +1,6 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Star, ShoppingCart, Eye } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/lib/cart-store";
 import { formatMXN } from "@/lib/format";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 
 export interface ProductCardProduct {
   id: string;
@@ -31,22 +28,18 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
   const sinStock = product.stock <= 0;
 
   return (
-    <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.2 }}
-      className="h-full"
-    >
-      <Card className="overflow-hidden group h-full flex flex-col border-border bg-card hover:shadow-md transition-shadow">
+    <div className="h-full">
+      <Card className="card-product-lift overflow-hidden group h-full flex flex-col border-border bg-card">
         <Link
           href={`/producto/${product.id}`}
           className="relative block aspect-square bg-muted overflow-hidden"
           aria-label={`Ver ${product.nombre}`}
         >
-          <div className="absolute inset-0 flex items-center justify-center text-7xl opacity-90 transition-transform duration-300 group-hover:scale-110">
+          <div className="product-image absolute inset-0 flex items-center justify-center text-7xl opacity-90">
             {product.imagen?.split(",")[0] || "🪑"}
           </div>
           {enOferta && (
-            <Badge className="absolute top-3 left-3 bg-secondary text-secondary-foreground">
+            <Badge className="badge-brass-pulse absolute top-3 left-3 bg-secondary text-secondary-foreground">
               Oferta
             </Badge>
           )}
@@ -89,12 +82,7 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
                   {formatMXN(product.precio)}
                 </span>
               )}
-              <span
-                className={cn(
-                  "font-serif text-xl font-semibold",
-                  enOferta ? "text-secondary" : "text-foreground"
-                )}
-              >
+              <span className="price-tag font-serif text-base font-semibold">
                 {formatMXN(precioActual)}
               </span>
             </div>
@@ -125,7 +113,7 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
           </div>
         </CardContent>
       </Card>
-    </motion.div>
+    </div>
   );
 }
 

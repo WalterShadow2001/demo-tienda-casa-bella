@@ -50,7 +50,7 @@ export function CartDrawer({ children }: { children?: React.ReactNode }) {
               </p>
             </div>
             <SheetClose asChild>
-              <Button asChild>
+              <Button asChild className="btn-elegant">
                 <Link href="/productos">Ver productos</Link>
               </Button>
             </SheetClose>
@@ -151,12 +151,12 @@ export function CartDrawer({ children }: { children?: React.ReactNode }) {
                 </span>
               </div>
               <SheetClose asChild>
-                <Button asChild className="w-full" size="lg">
+                <Button asChild variant="outline" className="btn-outline-brass w-full" size="lg">
                   <Link href="/carrito">Ver carrito</Link>
                 </Button>
               </SheetClose>
               <SheetClose asChild>
-                <Button asChild variant="outline" className="w-full">
+                <Button asChild className="btn-elegant w-full">
                   <Link href="/checkout">Finalizar compra</Link>
                 </Button>
               </SheetClose>

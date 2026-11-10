@@ -117,7 +117,7 @@ export default async function ProductoPage({ params }: Props) {
                   </Badge>
                 )}
                 {enOferta && (
-                  <Badge className="bg-secondary text-secondary-foreground">
+                  <Badge className="badge-brass-pulse bg-secondary text-secondary-foreground">
                     En oferta
                   </Badge>
                 )}
@@ -138,7 +138,7 @@ export default async function ProductoPage({ params }: Props) {
                   {formatMXN(producto.precio)}
                 </span>
               )}
-              <span className="font-serif text-4xl font-semibold text-primary">
+              <span className="price-tag font-serif text-2xl font-semibold">
                 {formatMXN(precioActual)}
               </span>
               {enOferta && (

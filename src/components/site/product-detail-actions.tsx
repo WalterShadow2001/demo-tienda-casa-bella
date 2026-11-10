@@ -55,7 +55,7 @@ export function ProductDetailActions({ producto }: Props) {
       <div className="flex flex-col sm:flex-row gap-3">
         <Button
           size="lg"
-          className="flex-1"
+          className="btn-elegant flex-1"
           disabled={sinStock}
           onClick={() => {
             add({

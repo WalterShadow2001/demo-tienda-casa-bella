@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, Plus, Minus, Trash2, ArrowRight, Tag, X, Loader2 } from "lucide-react";
+import { ShoppingBag, Plus, Minus, Trash2, ArrowRight, Tag, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -63,7 +63,7 @@ export default function CarritoPage() {
           Aún no has agregado piezas a tu carrito. Explora nuestra colección y
           encuentra el objeto perfecto para tu hogar.
         </p>
-        <Button asChild size="lg" className="mt-6">
+        <Button asChild size="lg" className="btn-elegant mt-6">
           <Link href="/productos">
             Explorar tienda
             <ArrowRight className="h-4 w-4" />
@@ -193,8 +193,8 @@ export default function CarritoPage() {
                       onKeyDown={(e) => e.key === "Enter" && aplicarCupon()}
                       aria-label="Código de cupón"
                     />
-                    <Button onClick={aplicarCupon} disabled={validando}>
-                      {validando ? <Loader2 className="h-4 w-4 animate-spin" /> : "Aplicar"}
+                    <Button onClick={aplicarCupon} disabled={validando} className="btn-outline-brass">
+                      {validando ? <span className="loader-leaf !h-4 !w-4 !border" /> : "Aplicar"}
                     </Button>
                   </div>
                 )}
@@ -238,13 +238,13 @@ export default function CarritoPage() {
                 </span>
               </div>
 
-              <Button asChild className="w-full" size="lg">
+              <Button asChild className="btn-elegant w-full" size="lg">
                 <Link href="/checkout">
                   Finalizar compra
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="w-full">
+              <Button asChild variant="outline" className="btn-outline-brass w-full">
                 <Link href="/productos">Seguir comprando</Link>
               </Button>
             </CardContent>

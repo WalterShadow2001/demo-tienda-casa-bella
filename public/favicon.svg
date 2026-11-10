@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Casa Bella — Favicon (32x32 simplified)
+  Compact house + leaf emblem on a warm white disc.
+-->
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="none" role="img" aria-label="Casa Bella">
+  <!-- Background disc -->
+  <circle cx="16" cy="16" r="15.4" fill="#FBFAF8" />
+  <!-- Olive ring -->
+  <circle cx="16" cy="16" r="14.4" stroke="#4A5340" stroke-width="1.2" />
+  <!-- Brass accent dots (4 cardinal points) -->
+  <circle cx="16" cy="2.4" r="0.9" fill="#C68866" />
+  <circle cx="29.6" cy="16" r="0.9" fill="#C68866" />
+  <circle cx="16" cy="29.6" r="0.9" fill="#C68866" />
+  <circle cx="2.4" cy="16" r="0.9" fill="#C68866" />
+  <!-- House roof -->
+  <path d="M8.4 16.4 L16 9.6 L23.6 16.4" stroke="#4A5340" stroke-width="1.6"
+        stroke-linecap="round" stroke-linejoin="round" />
+  <!-- House walls -->
+  <path d="M10 15.6 L10 23 L22 23 L22 15.6" stroke="#4A5340" stroke-width="1.6"
+        stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Leaf inside -->
+  <path d="M16 17 C 13.4 18.8 13.4 21.6 16 23 C 18.6 21.6 18.6 18.8 16 17 Z"
+        fill="#C68866" />
+  <!-- Leaf vein -->
+  <line x1="16" y1="18" x2="16" y2="22.4" stroke="#4A5340"
+        stroke-width="0.6" stroke-linecap="round" />
+</svg>

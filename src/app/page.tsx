@@ -81,7 +81,7 @@ export default async function HomePage() {
             Colecciones
           </p>
           <h2 className="font-serif text-4xl md:text-5xl font-semibold">
-            Explora por categoría
+            Explora por <span className="text-olive-gradient">categoría</span>
           </h2>
           <p className="mt-3 text-muted-foreground">
             Desde la sala hasta el jardín, encuentra piezas para cada rincón de tu hogar.
@@ -121,10 +121,10 @@ export default async function HomePage() {
                 Selección Casa Bella
               </p>
               <h2 className="font-serif text-4xl font-semibold">
-                Piezas destacadas
+                Piezas <span className="text-olive-gradient">destacadas</span>
               </h2>
             </div>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" className="btn-outline-brass">
               <Link href="/productos">
                 Ver todo
                 <ArrowRight className="h-4 w-4" />
@@ -165,6 +165,9 @@ export default async function HomePage() {
 
       {/* Promo Banner */}
       <section id="promo" className="container mx-auto max-w-7xl px-4 py-16">
+        <div className="divider-casa mb-12">
+          <div className="divider-casa-icon" />
+        </div>
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary to-[#5a6450] text-primary-foreground p-8 md:p-14">
           <div className="absolute -right-10 -top-10 text-[12rem] leading-none opacity-10 select-none">
             🎁
@@ -184,7 +187,7 @@ export default async function HomePage() {
               al finalizar tu compra. Válido en toda la tienda.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Button asChild size="lg" variant="secondary">
+              <Button asChild size="lg" variant="secondary" className="btn-elegant">
                 <Link href="/productos">
                   <Tag className="h-4 w-4" />
                   Comprar ahora
@@ -203,6 +206,9 @@ export default async function HomePage() {
 
       {/* CTA Final */}
       <section className="container mx-auto max-w-7xl px-4 pb-20">
+        <div className="divider-casa mb-12">
+          <div className="divider-casa-icon" />
+        </div>
         <div className="grid md:grid-cols-3 gap-6">
           {[
             { titulo: "Asesoría de diseño", desc: "Te ayudamos a crear espacios que cuenten historias.", emoji: "🎨" },

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -10,7 +11,6 @@ import {
   Search,
   Menu,
   X,
-  Leaf,
   Instagram,
   Facebook,
   Mail,
@@ -35,19 +35,26 @@ const NAV = [
   { href: "/categoria/decoracion", label: "Decoración" },
 ];
 
-function Logo() {
+function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <Link href="/" className="flex items-center gap-2 group" aria-label="Casa Bella inicio">
-      <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm transition-transform group-hover:scale-105">
-        <Leaf className="h-5 w-5" />
-      </span>
+      <Image
+        src="/logo.svg"
+        alt="Casa Bella"
+        width={compact ? 32 : 36}
+        height={compact ? 32 : 36}
+        priority
+        className="transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3"
+      />
       <span className="flex flex-col leading-none">
         <span className="font-serif text-2xl font-semibold tracking-tight text-foreground">
           Casa Bella
         </span>
-        <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-          Hogar &amp; Decoración
-        </span>
+        {!compact && (
+          <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+            Hogar &amp; Decoración
+          </span>
+        )}
       </span>
     </Link>
   );
@@ -63,10 +70,10 @@ function DesktopNav({ pathname }: { pathname: string }) {
             key={item.href}
             href={item.href}
             className={cn(
-              "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+              "nav-underline-brass px-3 py-2 text-sm font-medium rounded-md transition-colors",
               active
-                ? "text-primary bg-muted"
-                : "text-foreground/70 hover:text-foreground hover:bg-muted"
+                ? "text-primary"
+                : "text-foreground/70 hover:text-foreground"
             )}
           >
             {item.label}
@@ -87,7 +94,7 @@ function MobileNav({ pathname }: { pathname: string }) {
       </SheetTrigger>
       <SheetContent side="left" className="w-[280px] sm:w-[320px]">
         <div className="flex items-center justify-between mb-6">
-          <Logo />
+          <Logo compact />
           <SheetClose asChild>
             <Button variant="ghost" size="icon" aria-label="Cerrar">
               <X className="h-5 w-5" />
@@ -187,7 +194,10 @@ function CartButton() {
       <Button variant="ghost" size="icon" aria-label="Carrito" className="relative">
         <ShoppingCart className="h-5 w-5" />
         {count > 0 && (
-          <Badge className="absolute -top-1 -right-1 h-5 min-w-5 px-1 rounded-full bg-secondary text-secondary-foreground text-[10px] flex items-center justify-center">
+          <Badge
+            key={count}
+            className="cart-count-bounce absolute -top-1 -right-1 h-5 min-w-5 px-1 rounded-full bg-secondary text-secondary-foreground text-[10px] flex items-center justify-center"
+          >
             {count}
           </Badge>
         )}
@@ -244,9 +254,13 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-3">
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
-                <Leaf className="h-4 w-4" />
-              </span>
+              <Image
+                src="/logo.svg"
+                alt="Casa Bella"
+                width={36}
+                height={36}
+                className="rounded-full bg-primary-foreground/10 p-0.5"
+              />
               <span className="font-serif text-xl font-semibold">Casa Bella</span>
             </div>
             <p className="text-sm text-primary-foreground/80 max-w-md">
@@ -303,7 +317,9 @@ function Footer() {
             </ul>
           </div>
         </div>
-        <div className="divider-casa my-6 opacity-30" />
+        <div className="divider-casa my-8 opacity-70">
+          <div className="divider-casa-icon" />
+        </div>
         <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-primary-foreground/70">
           <p>© {new Date().getFullYear()} Casa Bella. Hecho con cariño en México.</p>
           <p>Políticas de privacidad · Términos y condiciones</p>
