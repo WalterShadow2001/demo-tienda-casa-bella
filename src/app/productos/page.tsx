@@ -20,6 +20,8 @@ export default async function ProductosPage({ searchParams }: PageProps) {
   const precioMin = params.precioMin ? Number(params.precioMin) : 0;
   const precioMaxParam = params.precioMax ? Number(params.precioMax) : 7000;
   const rating = params.rating ? Number(params.rating) : undefined;
+  const oferta = params.oferta === "true";
+  const destacado = params.destacado === "true";
 
   const [productos, categorias] = await Promise.all([
     getProductsForCatalog({
@@ -29,6 +31,8 @@ export default async function ProductosPage({ searchParams }: PageProps) {
       precioMin,
       precioMax: precioMaxParam,
       rating,
+      oferta,
+      destacado,
     }),
     getCategoriasForFilter(),
   ]);
@@ -92,6 +96,8 @@ export default async function ProductosPage({ searchParams }: PageProps) {
             precioMin,
             precioMax: precioMaxParam,
             rating,
+            oferta,
+            destacado,
           }}
         />
         <div className="flex-1 min-w-0">

@@ -19,6 +19,8 @@ interface GetOptions {
   precioMin?: number;
   precioMax?: number;
   rating?: number;
+  oferta?: boolean;
+  destacado?: boolean;
 }
 
 export async function getProductsForCatalog(opts: GetOptions): Promise<CatalogProduct[]> {
@@ -37,6 +39,8 @@ export async function getProductsForCatalog(opts: GetOptions): Promise<CatalogPr
     where.precio = range;
   }
   if (opts.rating) where.rating = { gte: opts.rating };
+  if (opts.oferta) where.precioOferta = { not: null };
+  if (opts.destacado) where.destacado = true;
 
   let orderBy: Record<string, "asc" | "desc"> = { creadoEn: "desc" };
   switch (opts.sort) {

@@ -26,19 +26,19 @@ export function ProductDetailActions({ producto }: Props) {
     <div className="space-y-4">
       <div className="flex items-center gap-4">
         <span className="text-sm font-medium">Cantidad:</span>
-        <div className="flex items-center rounded-md border border-border">
+        <div className="qty-selector" role="group" aria-label="Selector de cantidad">
           <button
+            type="button"
             onClick={() => setQty((q) => Math.max(1, q - 1))}
-            className="inline-flex h-9 w-9 items-center justify-center hover:bg-muted transition-colors"
             aria-label="Disminuir cantidad"
             disabled={sinStock}
           >
             <Minus className="h-4 w-4" />
           </button>
-          <span className="w-12 text-center text-sm font-medium">{qty}</span>
+          <span className="qty-value text-sm">{qty}</span>
           <button
+            type="button"
             onClick={() => setQty((q) => Math.min(producto.stock || 99, q + 1))}
-            className="inline-flex h-9 w-9 items-center justify-center hover:bg-muted transition-colors"
             aria-label="Aumentar cantidad"
             disabled={sinStock}
           >

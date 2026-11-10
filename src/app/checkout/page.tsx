@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { useCart, calcularTotales } from "@/lib/cart-store";
 import { formatMXN } from "@/lib/format";
@@ -205,33 +204,31 @@ export default function CheckoutPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <RadioGroup
-                defaultValue="tarjeta"
-                value={metodoPago}
-                onValueChange={(v) =>
-                  register("metodoPago").onChange({ target: { name: "metodoPago", value: v } })
-                }
-                className="space-y-3"
-              >
+              <div className="space-y-3" role="radiogroup" aria-label="Método de pago">
                 {[
                   { value: "tarjeta", label: "Tarjeta de crédito/débito", icon: CreditCard, desc: "Procesamiento seguro" },
                   { value: "transferencia", label: "Transferencia bancaria", icon: Banknote, desc: "Confirmación en 24h" },
                   { value: "efectivo", label: "Efectivo contra entrega", icon: Wallet, desc: "Paga al recibir" },
                 ].map((m) => (
-                  <label
-                    key={m.value}
-                    htmlFor={`m-${m.value}`}
-                    className="flex items-center gap-3 p-3 rounded-md border border-border hover:bg-muted/40 cursor-pointer transition-colors"
-                  >
-                    <RadioGroupItem value={m.value} id={`m-${m.value}`} />
-                    <m.icon className="h-5 w-5 text-primary" />
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">{m.label}</p>
-                      <p className="text-xs text-muted-foreground">{m.desc}</p>
+                  <label key={m.value} className="radio-card" htmlFor={`m-${m.value}`}>
+                    <input
+                      id={`m-${m.value}`}
+                      type="radio"
+                      value={m.value}
+                      defaultChecked={metodoPago === m.value}
+                      {...register("metodoPago")}
+                    />
+                    <span className="radio-card-indicator" aria-hidden="true" />
+                    <div className="radio-card-content flex items-center gap-3 pr-8">
+                      <m.icon className="h-5 w-5 text-primary" />
+                      <div>
+                        <p className="text-sm font-medium">{m.label}</p>
+                        <p className="text-xs text-muted-foreground">{m.desc}</p>
+                      </div>
                     </div>
                   </label>
                 ))}
-              </RadioGroup>
+              </div>
               <p className="mt-4 text-xs text-muted-foreground flex items-center gap-1">
                 <Lock className="h-3 w-3" /> Pago simulado para demo. No se
                 procesa información real.

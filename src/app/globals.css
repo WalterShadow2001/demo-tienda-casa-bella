@@ -326,3 +326,306 @@
 .nav-underline-brass:hover::after {
   width: 100%;
 }
+
+/* === More uiverse-inspired effects — per page variety === */
+
+/* ====== Animated Checkbox (for /productos filter sidebar) ====== */
+.checkbox-fancy {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #B8964A;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.checkbox-fancy:hover {
+  border-color: #4A5340;
+  transform: scale(1.05);
+}
+.checkbox-fancy:checked {
+  background: linear-gradient(135deg, #4A5340, #B8964A);
+  border-color: #4A5340;
+}
+.checkbox-fancy:checked::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 11px;
+  border: solid #FBFAF8;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+  animation: check-draw 0.3s ease-out;
+}
+@keyframes check-draw {
+  from { opacity: 0; transform: rotate(45deg) scale(0); }
+  to { opacity: 1; transform: rotate(45deg) scale(1); }
+}
+
+/* ====== Radio Card (for /checkout payment method) ====== */
+.radio-card {
+  display: block;
+  cursor: pointer;
+  padding: 16px;
+  border: 2px solid rgba(184, 150, 74, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.25s ease;
+  position: relative;
+}
+.radio-card:hover {
+  border-color: #B8964A;
+  background: rgba(184, 150, 74, 0.05);
+}
+.radio-card input {
+  display: none;
+}
+.radio-card input:checked + .radio-card-content,
+.radio-card:has(input:checked) {
+  border-color: #4A5340;
+  background: rgba(74, 83, 64, 0.05);
+  box-shadow: 0 4px 16px rgba(74, 83, 64, 0.15);
+}
+.radio-card input:checked ~ .radio-card-indicator,
+.radio-card:has(input:checked) .radio-card-indicator {
+  background: #4A5340;
+  border-color: #4A5340;
+}
+.radio-card-indicator {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(184, 150, 74, 0.4);
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+.radio-card-indicator::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: #FBFAF8;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.radio-card:has(input:checked) .radio-card-indicator::after {
+  opacity: 1;
+}
+
+/* ====== Success Checkmark (for /orden/[id]) ====== */
+.success-checkmark {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4A5340, #7A8C4C);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  animation: success-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 8px 24px rgba(74, 83, 64, 0.3);
+}
+@keyframes success-pop {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.success-checkmark svg {
+  width: 40px;
+  height: 40px;
+  stroke: #FBFAF8;
+  stroke-width: 3;
+  fill: none;
+}
+.success-checkmark-path {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  animation: checkmark-draw 0.5s ease-out 0.3s forwards;
+}
+@keyframes checkmark-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ====== Status Timeline (for /orden/[id]) ====== */
+.status-timeline {
+  position: relative;
+  padding-left: 32px;
+}
+.status-timeline::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(184, 150, 74, 0.2);
+}
+.status-timeline-item {
+  position: relative;
+  padding-bottom: 24px;
+}
+.status-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -25px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(184, 150, 74, 0.3);
+  border: 2px solid #FBFAF8;
+  z-index: 1;
+}
+.status-timeline-item.completed::before {
+  background: #4A5340;
+  box-shadow: 0 0 0 4px rgba(74, 83, 64, 0.15);
+}
+.status-timeline-item.current::before {
+  background: #B8964A;
+  box-shadow: 0 0 0 4px rgba(184, 150, 74, 0.25);
+  animation: timeline-pulse 2s ease-in-out infinite;
+}
+@keyframes timeline-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(184, 150, 74, 0.25); }
+  50% { box-shadow: 0 0 0 8px rgba(184, 150, 74, 0.15); }
+}
+.status-timeline-label {
+  font-weight: 600;
+  color: #2D2A26;
+}
+.status-timeline-item:not(.completed):not(.current) .status-timeline-label {
+  color: rgba(45, 42, 38, 0.4);
+}
+
+/* ====== Thumbnail Gallery (for /producto/[id]) ====== */
+.thumb-gallery {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.thumb-gallery-item {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: rgba(184, 150, 74, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.thumb-gallery-item:hover {
+  border-color: #B8964A;
+  transform: translateY(-2px);
+}
+.thumb-gallery-item.active {
+  border-color: #4A5340;
+  background: rgba(74, 83, 64, 0.1);
+  box-shadow: 0 4px 12px rgba(74, 83, 64, 0.15);
+}
+
+/* ====== Quantity Selector (for /producto/[id] and /carrito) ====== */
+.qty-selector {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid rgba(184, 150, 74, 0.3);
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.5);
+}
+.qty-selector button {
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  color: #4A5340;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.qty-selector button:hover {
+  background: rgba(74, 83, 64, 0.1);
+}
+.qty-selector button:active {
+  transform: scale(0.92);
+}
+.qty-selector button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.qty-selector .qty-value {
+  min-width: 36px;
+  text-align: center;
+  font-weight: 600;
+  color: #2D2A26;
+}
+
+/* ====== Hero Text Reveal (for home hero) ====== */
+.text-reveal {
+  overflow: hidden;
+}
+.text-reveal-inner {
+  display: inline-block;
+  animation: text-reveal-up 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes text-reveal-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ====== Mega Category Card (for home categories) ====== */
+.mega-cat-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  transition: transform 0.4s ease;
+}
+.mega-cat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(74, 83, 64, 0.85) 0%, rgba(184, 150, 74, 0.6) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.mega-cat-card:hover::before {
+  opacity: 1;
+}
+.mega-cat-card:hover {
+  transform: translateY(-6px);
+}
+.mega-cat-card-content {
+  position: relative;
+  z-index: 1;
+}
+.mega-cat-card-emoji {
+  transition: transform 0.4s ease;
+}
+.mega-cat-card:hover .mega-cat-card-emoji {
+  transform: scale(1.2) rotate(5deg);
+}
+
+/* ====== Empty Cart Illustration (for /carrito empty state) ====== */
+.empty-cart-bounce {
+  animation: empty-cart-bob 3s ease-in-out infinite;
+}
+@keyframes empty-cart-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}

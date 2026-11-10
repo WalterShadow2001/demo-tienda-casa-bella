@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { CheckCircle2, Package, Truck, MapPin, Mail, Phone, ArrowRight } from "lucide-react";
+import { Package, Truck, MapPin, Mail, Phone, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -30,6 +30,8 @@ const ESTADO_LABEL: Record<string, string> = {
   cancelado: "Cancelado",
 };
 
+const ESTADO_ORDER = ["pendiente", "pagado", "enviado", "entregado"];
+
 export default async function OrdenPage({ params }: Props) {
   const { id } = await params;
   const orden = await getOrden(id);
@@ -49,12 +51,21 @@ export default async function OrdenPage({ params }: Props) {
   }
 
   const fechaEntrega = addBusinessDays(new Date(orden.creadoEn), 5);
+  const estadoIdx = ESTADO_ORDER.indexOf(orden.estado);
+  const estaCancelado = orden.estado === "cancelado";
 
   return (
     <section className="container mx-auto max-w-3xl px-4 py-12">
       <div className="text-center mb-8">
-        <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-secondary/10 text-secondary mb-4">
-          <CheckCircle2 className="h-10 w-10" />
+        <div className="success-checkmark mb-4" role="img" aria-label="Pedido confirmado">
+          <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+            <path
+              className="success-checkmark-path"
+              d="M14 28 L24 38 L40 18"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </div>
         <h1 className="font-serif text-4xl font-semibold">
           ¡Gracias por tu compra!
@@ -180,6 +191,44 @@ export default async function OrdenPage({ params }: Props) {
               </div>
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Estado del pedido — timeline */}
+      <Card className="border-border bg-card mb-6">
+        <CardContent className="p-6">
+          <h2 className="font-serif text-xl mb-4">Estado del pedido</h2>
+          {estaCancelado ? (
+            <div className="rounded-md border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">
+              Este pedido fue cancelado. Si crees que es un error, contáctanos.
+            </div>
+          ) : (
+            <ol className="status-timeline">
+              {ESTADO_ORDER.map((est, i) => {
+                const isCompleted = i < estadoIdx;
+                const isCurrent = i === estadoIdx;
+                return (
+                  <li
+                    key={est}
+                    className={`status-timeline-item ${
+                      isCompleted ? "completed" : isCurrent ? "current" : ""
+                    }`}
+                  >
+                    <p className="status-timeline-label">
+                      {ESTADO_LABEL[est]}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {isCompleted
+                        ? "Completado"
+                        : isCurrent
+                        ? "En proceso"
+                        : "Pendiente"}
+                    </p>
+                  </li>
+                );
+              })}
+            </ol>
+          )}
         </CardContent>
       </Card>
 

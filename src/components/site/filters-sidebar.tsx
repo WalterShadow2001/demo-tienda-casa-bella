@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { SlidersHorizontal, X, Star } from "lucide-react";
+import { SlidersHorizontal, X, Star, Sparkles, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -38,6 +38,8 @@ interface InitialValues {
   precioMin?: number;
   precioMax?: number;
   rating?: number;
+  oferta?: boolean;
+  destacado?: boolean;
 }
 
 interface Props {
@@ -61,6 +63,8 @@ export function FiltersSidebar({
   const [busqueda, setBusqueda] = React.useState(initialValues.busqueda ?? "");
   const sort = initialValues.sort ?? "recientes";
   const ratingValue = initialValues.rating;
+  const ofertaValue = initialValues.oferta ?? false;
+  const destacadoValue = initialValues.destacado ?? false;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const current = new URLSearchParams();
@@ -72,12 +76,19 @@ export function FiltersSidebar({
   if (initialValues.precioMax && initialValues.precioMax < precioMax)
     current.set("precioMax", String(initialValues.precioMax));
   if (initialValues.rating) current.set("rating", String(initialValues.rating));
+  if (initialValues.oferta) current.set("oferta", "true");
+  if (initialValues.destacado) current.set("destacado", "true");
 
   const applyFilters = React.useCallback(
-    (overrides: Record<string, string | number | undefined> = {}) => {
+    (overrides: Record<string, string | number | boolean | undefined> = {}) => {
       const next = new URLSearchParams(current.toString());
       Object.entries(overrides).forEach(([k, v]) => {
-        if (v === undefined || v === "" || (typeof v === "number" && v === 0))
+        if (
+          v === undefined ||
+          v === "" ||
+          (typeof v === "number" && v === 0) ||
+          (typeof v === "boolean" && v === false)
+        )
           next.delete(k);
         else next.set(k, String(v));
       });
@@ -86,6 +97,9 @@ export function FiltersSidebar({
     },
     [current, router]
   );
+
+  const toggleCaracteristica = (key: "oferta" | "destacado", value: boolean) =>
+    applyFilters({ [key]: !value });
 
   const setCategoria = (slug: string | undefined) =>
     applyFilters({ categoria: slug });
@@ -237,6 +251,36 @@ export function FiltersSidebar({
               </span>
             </button>
           ))}
+        </div>
+      </div>
+
+      <Separator />
+
+      <div>
+        <h3 className="font-serif text-lg mb-3">Características</h3>
+        <div className="space-y-2">
+          <label className="flex items-center gap-3 px-2 py-1.5 rounded-md text-sm cursor-pointer hover:bg-muted/60 transition-colors">
+            <input
+              type="checkbox"
+              className="checkbox-fancy"
+              checked={ofertaValue}
+              onChange={() => toggleCaracteristica("oferta", ofertaValue)}
+            />
+            <span className="inline-flex items-center gap-1.5 text-foreground/80">
+              <Tag className="h-3.5 w-3.5 text-accent" /> En oferta
+            </span>
+          </label>
+          <label className="flex items-center gap-3 px-2 py-1.5 rounded-md text-sm cursor-pointer hover:bg-muted/60 transition-colors">
+            <input
+              type="checkbox"
+              className="checkbox-fancy"
+              checked={destacadoValue}
+              onChange={() => toggleCaracteristica("destacado", destacadoValue)}
+            />
+            <span className="inline-flex items-center gap-1.5 text-foreground/80">
+              <Sparkles className="h-3.5 w-3.5 text-accent" /> Destacados
+            </span>
+          </label>
         </div>
       </div>
 

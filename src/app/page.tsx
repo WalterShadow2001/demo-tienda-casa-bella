@@ -91,21 +91,19 @@ export default async function HomePage() {
           {categorias.map((c) => {
             const info = CATEGORIA_INFO[c.slug] ?? { emoji: "🪑", desc: c.nombre };
             return (
-              <Link key={c.id} href={`/categoria/${c.slug}`} className="group">
-                <Card className="overflow-hidden h-full border-border hover:shadow-md transition-shadow bg-card">
-                  <CardContent className="p-6 flex flex-col items-center text-center">
-                    <span className="text-4xl mb-2 transition-transform group-hover:scale-110">
-                      {info.emoji}
-                    </span>
-                    <p className="font-serif text-lg">{c.nombre}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {info.desc}
-                    </p>
-                    <Badge variant="outline" className="mt-2 text-[10px]">
-                      {c._count.productos} productos
-                    </Badge>
-                  </CardContent>
-                </Card>
+              <Link key={c.id} href={`/categoria/${c.slug}`} className="group mega-cat-card block bg-card border border-border hover:shadow-md transition-shadow">
+                <CardContent className="mega-cat-card-content p-6 flex flex-col items-center text-center">
+                  <span className="mega-cat-card-emoji text-4xl mb-2">
+                    {info.emoji}
+                  </span>
+                  <p className="font-serif text-lg">{c.nombre}</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {info.desc}
+                  </p>
+                  <Badge variant="outline" className="mt-2 text-[10px]">
+                    {c._count.productos} productos
+                  </Badge>
+                </CardContent>
               </Link>
             );
           })}

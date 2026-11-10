@@ -100,7 +100,11 @@ export function HeroCarousel() {
                         </span>
                         <h2 className="mt-4 font-serif text-4xl md:text-6xl font-semibold leading-[1.05] text-foreground">
                           {titleMain}{" "}
-                          <span className="text-olive-gradient">{titleHighlight}</span>
+                          <span className="text-reveal inline-block align-bottom">
+                            <span className="text-reveal-inner text-olive-gradient">
+                              {titleHighlight}
+                            </span>
+                          </span>
                           <span className="block text-foreground/70 italic font-normal text-3xl md:text-4xl">
                             {s.subtitle}
                           </span>

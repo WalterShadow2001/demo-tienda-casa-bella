@@ -70,18 +70,17 @@ export function ProductDetailGallery({ imagenes, nombre }: Props) {
 
       {/* Thumbnails */}
       {imgs.length > 1 && (
-        <div className="flex gap-2 mt-3">
+        <div className="thumb-gallery scrollbar-casa">
           {imgs.map((img, i) => (
             <button
               key={i}
               onClick={() => emblaApi?.scrollTo(i)}
               className={cn(
-                "h-16 w-16 rounded-md border-2 flex items-center justify-center bg-muted text-2xl transition-all",
-                selected === i
-                  ? "border-primary"
-                  : "border-border hover:border-muted-foreground"
+                "thumb-gallery-item",
+                selected === i && "active"
               )}
               aria-label={`Ver imagen ${i + 1}`}
+              aria-pressed={selected === i}
             >
               {img}
             </button>

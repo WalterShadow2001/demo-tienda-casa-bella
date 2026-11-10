@@ -55,7 +55,7 @@ export default function CarritoPage() {
   if (items.length === 0) {
     return (
       <section className="container mx-auto max-w-3xl px-4 py-20 flex flex-col items-center text-center">
-        <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-muted mb-6">
+        <div className="empty-cart-bounce inline-flex h-20 w-20 items-center justify-center rounded-full bg-muted mb-6">
           <ShoppingBag className="h-9 w-9 text-muted-foreground" />
         </div>
         <h1 className="font-serif text-3xl font-semibold">Tu carrito está vacío</h1>
@@ -123,23 +123,21 @@ export default function CarritoPage() {
                         </button>
                       </div>
                       <div className="flex items-end justify-between mt-auto pt-2">
-                        <div className="flex items-center rounded-md border border-border">
+                        <div className="qty-selector" role="group" aria-label={`Cantidad de ${it.nombre}`}>
                           <button
+                            type="button"
                             onClick={() => updateQty(it.productoId, it.cantidad - 1)}
-                            className="inline-flex h-8 w-8 items-center justify-center hover:bg-muted transition-colors"
-                            aria-label="Disminuir"
+                            aria-label="Disminuir cantidad"
                           >
-                            <Minus className="h-3 w-3" />
+                            <Minus className="h-3.5 w-3.5" />
                           </button>
-                          <span className="w-10 text-center text-sm font-medium">
-                            {it.cantidad}
-                          </span>
+                          <span className="qty-value text-sm">{it.cantidad}</span>
                           <button
+                            type="button"
                             onClick={() => updateQty(it.productoId, it.cantidad + 1)}
-                            className="inline-flex h-8 w-8 items-center justify-center hover:bg-muted transition-colors"
-                            aria-label="Aumentar"
+                            aria-label="Aumentar cantidad"
                           >
-                            <Plus className="h-3 w-3" />
+                            <Plus className="h-3.5 w-3.5" />
                           </button>
                         </div>
                         <p className="font-serif text-lg font-semibold">
