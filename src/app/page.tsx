@@ -10,13 +10,31 @@ import { formatMXN } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
-const CATEGORIA_INFO: Record<string, { emoji: string; desc: string }> = {
-  sala: { emoji: "🛋️", desc: "Sofás y mesas" },
-  cocina: { emoji: "🍳", desc: "Vajilla y utensilios" },
-  dormitorio: { emoji: "🛏️", desc: "Ropa de cama y lámparas" },
-  bano: { emoji: "🛁", desc: "Toallas y organizadores" },
-  decoracion: { emoji: "🖼️", desc: "Cuadros y floreros" },
-  jardin: { emoji: "🪴", desc: "Macetas y exteriores" },
+const CATEGORIA_INFO: Record<string, { image: string; desc: string }> = {
+  sala: {
+    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/caf255edeb8e.jpg",
+    desc: "Sofás y mesas",
+  },
+  cocina: {
+    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/490eeec21946.jpg",
+    desc: "Vajilla y utensilios",
+  },
+  dormitorio: {
+    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2be532e01686.jpg",
+    desc: "Ropa de cama y lámparas",
+  },
+  bano: {
+    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/a7d7c3441b55.jpeg",
+    desc: "Toallas y organizadores",
+  },
+  decoracion: {
+    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/18d014fc0789.jpg",
+    desc: "Cuadros y floreros",
+  },
+  jardin: {
+    image: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/ec04bdf3a6d8.jpg",
+    desc: "Macetas y exteriores",
+  },
 };
 
 async function getProductos() {
@@ -89,21 +107,36 @@ export default async function HomePage() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {categorias.map((c) => {
-            const info = CATEGORIA_INFO[c.slug] ?? { emoji: "🪑", desc: c.nombre };
+            const info = CATEGORIA_INFO[c.slug] ?? { image: "", desc: c.nombre };
             return (
-              <Link key={c.id} href={`/categoria/${c.slug}`} className="group mega-cat-card block bg-card border border-border hover:shadow-md transition-shadow">
-                <CardContent className="mega-cat-card-content p-6 flex flex-col items-center text-center">
-                  <span className="mega-cat-card-emoji text-4xl mb-2">
-                    {info.emoji}
-                  </span>
-                  <p className="font-serif text-lg">{c.nombre}</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {info.desc}
+              <Link
+                key={c.id}
+                href={`/categoria/${c.slug}`}
+                className="group relative block aspect-[4/3] overflow-hidden rounded-xl border border-border transition-transform duration-400 hover:-translate-y-1.5 hover:shadow-xl"
+              >
+                {info.image ? (
+                  <img
+                    src={info.image}
+                    alt={c.nombre}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-muted" />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+                <div className="absolute inset-0 flex flex-col justify-end p-4">
+                  <p className="font-serif text-lg text-white drop-shadow-sm">
+                    {c.nombre}
                   </p>
-                  <Badge variant="outline" className="mt-2 text-[10px]">
+                  <p className="text-xs text-white/85">{info.desc}</p>
+                  <Badge
+                    variant="outline"
+                    className="mt-2 w-fit text-[10px] border-white/30 bg-white/15 text-white backdrop-blur"
+                  >
                     {c._count.productos} productos
                   </Badge>
-                </CardContent>
+                </div>
               </Link>
             );
           })}

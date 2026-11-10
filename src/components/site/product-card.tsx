@@ -21,11 +21,25 @@ export interface ProductCardProduct {
   categoria?: { nombre: string; slug: string } | null;
 }
 
+/** Returns the first token from the comma-separated `imagenes` field,
+ *  or a fallback emoji when no real photo is available. */
+function firstImage(imagenes: string | undefined | null, fallback = "🪑"): string {
+  if (!imagenes) return fallback;
+  const first = imagenes.split(",")[0]?.trim();
+  return first || fallback;
+}
+
+function isUrl(value: string): boolean {
+  return value.startsWith("http://") || value.startsWith("https://");
+}
+
 export function ProductCard({ product }: { product: ProductCardProduct }) {
   const add = useCart((s) => s.add);
   const precioActual = product.precioOferta ?? product.precio;
   const enOferta = product.precioOferta != null && product.precioOferta < product.precio;
   const sinStock = product.stock <= 0;
+  const img = firstImage(product.imagenes);
+  const isPhoto = isUrl(img);
 
   return (
     <div className="h-full">
@@ -35,9 +49,18 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
           className="relative block aspect-square bg-muted overflow-hidden"
           aria-label={`Ver ${product.nombre}`}
         >
-          <div className="product-image absolute inset-0 flex items-center justify-center text-7xl opacity-90">
-            {product.imagen?.split(",")[0] || "🪑"}
-          </div>
+          {isPhoto ? (
+            <img
+              src={img}
+              alt={product.nombre}
+              className="product-image absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          ) : (
+            <div className="product-image absolute inset-0 flex items-center justify-center text-7xl opacity-90">
+              {img}
+            </div>
+          )}
           {enOferta && (
             <Badge className="badge-brass-pulse absolute top-3 left-3 bg-secondary text-secondary-foreground">
               Oferta
@@ -100,7 +123,7 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
                     productoId: product.id,
                     nombre: product.nombre,
                     precio: precioActual,
-                    imagen: product.imagen?.split(",")[0] || "🪑",
+                    imagen: img,
                     categoria: product.categoria?.slug,
                   });
                   toast.success(`${product.nombre} agregado al carrito`);

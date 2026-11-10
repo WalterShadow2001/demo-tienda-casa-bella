@@ -112,8 +112,17 @@ export default async function OrdenPage({ params }: Props) {
             <ul className="space-y-3">
               {items.map((it, i) => (
                 <li key={i} className="flex gap-3 text-sm">
-                  <span className="h-12 w-12 shrink-0 rounded-md bg-muted flex items-center justify-center text-2xl">
-                    {it.imagen || "🪑"}
+                  <span className="h-12 w-12 shrink-0 rounded-md bg-muted flex items-center justify-center text-2xl overflow-hidden">
+                    {typeof it.imagen === "string" && (it.imagen.startsWith("http://") || it.imagen.startsWith("https://")) ? (
+                      <img
+                        src={it.imagen}
+                        alt={it.nombre}
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <span>{it.imagen || "🪑"}</span>
+                    )}
                   </span>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium">{it.nombre}</p>

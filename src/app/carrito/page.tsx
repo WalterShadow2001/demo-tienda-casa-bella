@@ -94,9 +94,18 @@ export default function CarritoPage() {
                   <CardContent className="p-4 flex gap-4">
                     <Link
                       href={`/producto/${it.productoId}`}
-                      className="h-24 w-24 shrink-0 rounded-md bg-muted flex items-center justify-center text-5xl hover:opacity-80 transition-opacity"
+                      className="h-24 w-24 shrink-0 rounded-md bg-muted flex items-center justify-center text-5xl overflow-hidden hover:opacity-80 transition-opacity"
                     >
-                      {it.imagen}
+                      {typeof it.imagen === "string" && (it.imagen.startsWith("http://") || it.imagen.startsWith("https://")) ? (
+                        <img
+                          src={it.imagen}
+                          alt={it.nombre}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <span>{it.imagen}</span>
+                      )}
                     </Link>
                     <div className="flex-1 min-w-0 flex flex-col">
                       <div className="flex items-start justify-between gap-3">

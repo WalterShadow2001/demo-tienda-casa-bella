@@ -232,8 +232,17 @@ export function AdminDashboard() {
                     <span className="text-xs font-mono w-5 text-muted-foreground">
                       #{i + 1}
                     </span>
-                    <span className="h-9 w-9 rounded-md bg-muted flex items-center justify-center text-lg">
-                      {p.imagen}
+                    <span className="h-9 w-9 shrink-0 rounded-md bg-muted flex items-center justify-center text-lg overflow-hidden">
+                      {typeof p.imagen === "string" && (p.imagen.startsWith("http://") || p.imagen.startsWith("https://")) ? (
+                        <img
+                          src={p.imagen}
+                          alt={p.nombre}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <span>{p.imagen || "🪑"}</span>
+                      )}
                     </span>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium line-clamp-1">{p.nombre}</p>

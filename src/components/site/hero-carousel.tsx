@@ -18,7 +18,8 @@ const SLIDES = [
     cta2: { label: "Ver promociones", href: "/#promo" },
     badge: "Primavera 2025",
     bg: "from-[#4A5340]/85 via-[#5a6450]/70 to-[#4A5340]/85",
-    emoji: "🛋️",
+    image:
+      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d64d2c898773.jpeg",
   },
   {
     eyebrow: "Edición limitada",
@@ -30,7 +31,8 @@ const SLIDES = [
     cta2: { label: "Comprar ahora", href: "/productos" },
     badge: "Hasta 20% off",
     bg: "from-[#C68866]/85 via-[#d09a7c]/70 to-[#C68866]/85",
-    emoji: "🪑",
+    image:
+      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/22a313f514ca.jpg",
   },
   {
     eyebrow: "Hecho en México",
@@ -42,7 +44,8 @@ const SLIDES = [
     cta2: { label: "Ver decoración", href: "/categoria/decoracion" },
     badge: "Artesanal",
     bg: "from-[#B8964A]/85 via-[#c9a85e]/70 to-[#B8964A]/85",
-    emoji: "🏺",
+    image:
+      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/6df78c8f3c93.jpg",
   },
   {
     eyebrow: "Para el descanso",
@@ -54,7 +57,8 @@ const SLIDES = [
     cta2: { label: "Ver baño", href: "/categoria/bano" },
     badge: "Confort premium",
     bg: "from-[#6B6359]/85 via-[#82776a]/70 to-[#6B6359]/85",
-    emoji: "🛏️",
+    image:
+      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/19eb62827bbf.jpg",
   },
 ];
 
@@ -137,8 +141,14 @@ export function HeroCarousel() {
                     >
                       <div className="relative">
                         <div className="absolute -inset-6 bg-primary-foreground/10 rounded-full blur-3xl" />
-                        <div className="relative text-[14rem] leading-none drop-shadow-2xl">
-                          {s.emoji}
+                        <div className="relative w-[22rem] h-[22rem] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-primary-foreground/20">
+                          <img
+                            src={s.image}
+                            alt={`${s.title} — ${s.subtitle}`}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                         </div>
                       </div>
                     </motion.div>

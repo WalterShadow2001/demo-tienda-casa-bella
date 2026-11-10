@@ -61,7 +61,7 @@ async function main() {
     if (!catId) throw new Error(`Missing categoria for ${p.categoriaSlug}`);
     const id = randomUUID();
     await exec(
-      "INSERT INTO Producto (id, nombre, descripcion, precio, precioOferta, categoriaId, imagenes, especificaciones, stock, rating, destacado, creadoEn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))",
+      "INSERT INTO Producto (id, nombre, descripcion, precio, precioOferta, categoriaId, imagenes, especificaciones, stock, rating, destacado, creadoEn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         id,
         p.nombre,
@@ -74,6 +74,7 @@ async function main() {
         p.stock,
         p.rating,
         p.destacado ? 1 : 0,
+        new Date().toISOString(),
       ]
     );
     console.log("✓ Producto:", p.nombre);
@@ -92,7 +93,7 @@ async function main() {
   for (const o of ORDENES) {
     const id = randomUUID();
     await exec(
-      "INSERT INTO Orden (id, clienteNombre, clienteEmail, clienteTelefono, direccion, ciudad, codigoPostal, items, subtotal, envio, total, estado, cupon, creadoEn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))",
+      "INSERT INTO Orden (id, clienteNombre, clienteEmail, clienteTelefono, direccion, ciudad, codigoPostal, items, subtotal, envio, total, estado, cupon, creadoEn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         id,
         o.clienteNombre,
@@ -107,6 +108,7 @@ async function main() {
         o.total,
         o.estado,
         o.cupon ?? null,
+        new Date().toISOString(),
       ]
     );
     console.log("✓ Orden:", o.clienteNombre);

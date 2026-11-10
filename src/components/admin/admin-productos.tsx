@@ -160,8 +160,21 @@ export function AdminProductos() {
                   <TableRow key={p.id}>
                     <TableCell>
                       <div className="flex items-center gap-2">
-                        <span className="h-9 w-9 rounded-md bg-muted flex items-center justify-center text-lg">
-                          {p.imagenes?.split(",")[0] || "🪑"}
+                        <span className="h-9 w-9 shrink-0 rounded-md bg-muted flex items-center justify-center text-lg overflow-hidden">
+                          {(() => {
+                            const first = p.imagenes?.split(",")[0]?.trim();
+                            if (first && (first.startsWith("http://") || first.startsWith("https://"))) {
+                              return (
+                                <img
+                                  src={first}
+                                  alt={p.nombre}
+                                  className="h-full w-full object-cover"
+                                  loading="lazy"
+                                />
+                              );
+                            }
+                            return <span>{first || "🪑"}</span>;
+                          })()}
                         </span>
                         <div className="min-w-0">
                           <p className="font-medium line-clamp-1">{p.nombre}</p>
@@ -439,12 +452,12 @@ function ProductoDialog({
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="imagenes">Imagen (emoji) *</Label>
+              <Label htmlFor="imagenes">Imagen (URL o emoji) *</Label>
               <Input
                 id="imagenes"
                 value={form.imagenes}
                 onChange={(e) => setForm({ ...form, imagenes: e.target.value })}
-                placeholder="🪑"
+                placeholder="https://...  (o emoji 🪑)"
               />
             </div>
             <div className="space-y-2">

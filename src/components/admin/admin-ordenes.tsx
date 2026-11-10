@@ -265,8 +265,17 @@ function ItemsDetalle({ orden }: { orden: Orden }) {
     <div className="mt-4 space-y-2">
       {items.map((it, i) => (
         <div key={i} className="flex items-center gap-3 text-sm border-t border-border pt-2">
-          <span className="h-8 w-8 rounded bg-muted flex items-center justify-center text-lg">
-            {it.imagen || "🪑"}
+          <span className="h-8 w-8 shrink-0 rounded bg-muted flex items-center justify-center text-lg overflow-hidden">
+            {typeof it.imagen === "string" && (it.imagen.startsWith("http://") || it.imagen.startsWith("https://")) ? (
+              <img
+                src={it.imagen}
+                alt={it.nombre}
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            ) : (
+              <span>{it.imagen || "🪑"}</span>
+            )}
           </span>
           <span className="flex-1">{it.nombre}</span>
           <span className="text-muted-foreground">

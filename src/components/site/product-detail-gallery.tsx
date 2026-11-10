@@ -10,6 +10,10 @@ interface Props {
   nombre: string;
 }
 
+function isUrl(value: string): boolean {
+  return value.startsWith("http://") || value.startsWith("https://");
+}
+
 export function ProductDetailGallery({ imagenes, nombre }: Props) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [selected, setSelected] = React.useState(0);
@@ -23,23 +27,37 @@ export function ProductDetailGallery({ imagenes, nombre }: Props) {
   }, [emblaApi]);
 
   const imgs = imagenes.length > 0 ? imagenes : ["🪑"];
+  const selectedImg = imgs[Math.min(selected, imgs.length - 1)] ?? imgs[0];
+  const selectedIsPhoto = isUrl(selectedImg);
 
   return (
     <div>
       <div className="overflow-hidden rounded-xl border border-border bg-muted relative">
         <div ref={emblaRef} className="flex">
-          {imgs.map((img, i) => (
-            <div key={i} className="min-w-full">
-              <div className="relative aspect-square flex items-center justify-center bg-gradient-to-br from-muted/60 to-muted">
-                <span className="text-[14rem] leading-none select-none">
-                  {img}
-                </span>
-                <span className="absolute bottom-3 right-3 px-2 py-1 rounded-full bg-background/80 text-xs text-muted-foreground">
-                  {i + 1} / {imagenes.length}
-                </span>
+          {imgs.map((img, i) => {
+            const photo = isUrl(img);
+            return (
+              <div key={i} className="min-w-full">
+                <div className="relative aspect-square flex items-center justify-center bg-gradient-to-br from-muted/60 to-muted">
+                  {photo ? (
+                    <img
+                      src={img}
+                      alt={`${nombre} — imagen ${i + 1}`}
+                      className="absolute inset-0 h-full w-full object-cover"
+                      loading={i === 0 ? "eager" : "lazy"}
+                    />
+                  ) : (
+                    <span className="text-[14rem] leading-none select-none">
+                      {img}
+                    </span>
+                  )}
+                  <span className="absolute bottom-3 right-3 px-2 py-1 rounded-full bg-background/80 text-xs text-muted-foreground">
+                    {i + 1} / {imgs.length}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         {imgs.length > 1 && (
           <>
@@ -71,20 +89,32 @@ export function ProductDetailGallery({ imagenes, nombre }: Props) {
       {/* Thumbnails */}
       {imgs.length > 1 && (
         <div className="thumb-gallery scrollbar-casa">
-          {imgs.map((img, i) => (
-            <button
-              key={i}
-              onClick={() => emblaApi?.scrollTo(i)}
-              className={cn(
-                "thumb-gallery-item",
-                selected === i && "active"
-              )}
-              aria-label={`Ver imagen ${i + 1}`}
-              aria-pressed={selected === i}
-            >
-              {img}
-            </button>
-          ))}
+          {imgs.map((img, i) => {
+            const photo = isUrl(img);
+            return (
+              <button
+                key={i}
+                onClick={() => emblaApi?.scrollTo(i)}
+                className={cn(
+                  "thumb-gallery-item overflow-hidden",
+                  selected === i && "active"
+                )}
+                aria-label={`Ver imagen ${i + 1}`}
+                aria-pressed={selected === i}
+              >
+                {photo ? (
+                  <img
+                    src={img}
+                    alt={`${nombre} — miniatura ${i + 1}`}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span className="text-2xl">{img}</span>
+                )}
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -103,7 +133,16 @@ export function ProductDetailGallery({ imagenes, nombre }: Props) {
           >
             <ChevronRight className="h-5 w-5 rotate-45" />
           </button>
-          <div className="text-[20rem] leading-none">{imagenes[selected]}</div>
+          {selectedIsPhoto ? (
+            <img
+              src={selectedImg}
+              alt={`${nombre} — imagen ampliada`}
+              className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <div className="text-[20rem] leading-none">{selectedImg}</div>
+          )}
         </div>
       )}
     </div>

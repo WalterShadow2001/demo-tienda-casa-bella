@@ -11,3 +11,7 @@ build
 out
 .turbo
 .vercel
+
+# Local SQLite database (sandbox)
+db/*.db
+db/*.db-journal

@@ -70,8 +70,17 @@ export function CartDrawer({ children }: { children?: React.ReactNode }) {
                       transition={{ duration: 0.18 }}
                       className="flex gap-3"
                     >
-                      <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-md bg-muted text-3xl">
-                        {it.imagen}
+                      <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted text-3xl">
+                        {typeof it.imagen === "string" && (it.imagen.startsWith("http://") || it.imagen.startsWith("https://")) ? (
+                          <img
+                            src={it.imagen}
+                            alt={it.nombre}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <span>{it.imagen}</span>
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2">
